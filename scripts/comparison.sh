@@ -31,6 +31,7 @@ IPDAE_COMP_ABS=$(pwd $IPDAE_COMP)
 mkdir -p $IPDAE_COMP
 cd $IPDAE
 python compress.py  $PLY_ABS $IPDAE_COMP_ABS './model/K256' --K 256
+# all versions and K must match the model name
 python decompress.py  $IPDAE_COMP_ABS './data/ModelNet40_K256_decompressed' './model/K256' --K 256
 
 cd -
