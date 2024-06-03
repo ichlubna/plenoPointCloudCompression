@@ -1,5 +1,6 @@
 # Source https://stackoverflow.com/questions/60506331/conversion-of-binary-lidar-data-bin-to-point-cloud-data-pcd-format
 import open3d as o3d
+import sys
 import struct
 import numpy as np
 size_float = 4
