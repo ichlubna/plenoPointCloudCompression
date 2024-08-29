@@ -30,9 +30,9 @@ PLY_DIR=$OUT/ply
 mkdir -p $PLY_DIR
 cp $2 $PLY_DIR/
 
+
 $DRACO/draco_encoder --skip NORMAL --skip TEX_COORD --skip GENERIC -qp 8 -cl 10 -point_cloud -i $2 -o $COMPRESSED/draco.drc
 $DRACO/draco_decoder -i $COMPRESSED/draco.drc -o $DECOMPRESSED/draco.ply
-
 
 BIN=$OUT/bin
 mkdir -p $BIN
@@ -55,6 +55,7 @@ cd -
 
 $PCL/pcl $1 $COMPRESSED/pcl.bin $DECOMPRESSED/pcl.pcd
 
+# The model must be in the positive quadrant of the space, must be big enough (relative to resolution), colors must be baked in attributes
 PLY_DIR_ABS=$(realpath $PLY_DIR)
 GEOSLICE_COMP="$COMPRESSED/geoslice"
 mkdir -p $GEOSLICE_COMP
@@ -63,7 +64,7 @@ GEOSLICE_DECOMP="$DECOMPRESSED/geoslice"
 mkdir -p $GEOSLICE_DECOMP
 GEOSLICE_DECOMP_ABS=$(realpath $GEOSLICE_DECOMP)
 cd $GEOSLICE
-python point_cloud_compression_slice_conditioning.py --experiment 'a0.6_res_t64_Slice_cond_160-10_400' --model_path 'models/' compress --adaptive --resolution 128 --input_glob "$PLY_DIR_ABS/*.ply" --output_dir $GEOSLICE_COMP_ABS
+python point_cloud_compression_slice_conditioning.py --experiment 'a0.6_res_t64_Slice_cond_160-10_400' --model_path 'models/' compress --adaptive --resolution 64 --input_glob "$PLY_DIR_ABS/*.ply" --output_dir $GEOSLICE_COMP_ABS
 python point_cloud_compression_slice_conditioning.py --experiment 'a0.6_res_t64_Slice_cond_160-10_400' --model_path 'models/' decompress --input_dir $GEOSLICE_COMP_ABS --output_dir $GEOSLICE_DECOMP_ABS
 cd -
 
